@@ -29,16 +29,20 @@ Created by 손예원, 박준영, 장태양, 주시현 on 11/16/23.
 
 struct Node {
     int key, height;
-    node *left, right;
+    Node *left, *right;
 };
 
 typedef Node *NodePointer;
 
 class AVLTree {
 private:
-    NodePointer root;
+
 
 public:
+    NodePointer root;
+
+    AVLTree() { root = nullptr; };
+
     int minimum();
 
     int maximum();
@@ -49,11 +53,11 @@ public:
 
     int find();
 
-    int insert();
+    Node *insert(int key);
 
     int rank();
 
-    int erase()
+    int erase();
 };
 
 #endif //STL_SET_IMPLEMENT_AVLTREE_H
