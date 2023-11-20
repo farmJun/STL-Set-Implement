@@ -134,6 +134,10 @@ Node *AVLTree::insert(int key) {
     return root;
 }
 
+const NodePointer AVLTree::getRoot() const {
+    return root;
+}
+
 void printTree(Node *root, string indent, bool last) {
     if (root != nullptr) {
         cout << indent;
@@ -153,19 +157,19 @@ void printTree(Node *root, string indent, bool last) {
 int main() {
     AVLTree avlTree;
     avlTree.insert(50);
-    printTree(avlTree.root, "", true);
+    printTree(avlTree.getRoot(), "", true);
     avlTree.insert(30);
-    printTree(avlTree.root, "", true);
+    printTree(avlTree.getRoot(), "", true);
     avlTree.insert(20);
-    printTree(avlTree.root, "", true);
+    printTree(avlTree.getRoot(), "", true);
     avlTree.insert(40);
-    printTree(avlTree.root, "", true);
+    printTree(avlTree.getRoot(), "", true);
     avlTree.insert(70);
-    printTree(avlTree.root, "", true);
+    printTree(avlTree.getRoot(), "", true);
     avlTree.insert(60);
-    printTree(avlTree.root, "", true);
+    printTree(avlTree.getRoot(), "", true);
     avlTree.insert(80);
-    printTree(avlTree.root, "", true);
+    printTree(avlTree.getRoot(), "", true);
 
     return 0;
 }

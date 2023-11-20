@@ -36,11 +36,9 @@ typedef Node *NodePointer;
 
 class AVLTree {
 private:
-
-
-public:
     NodePointer root;
 
+public:
     AVLTree() { root = nullptr; };
 
     int minimum();
@@ -58,6 +56,8 @@ public:
     int rank();
 
     int erase();
+
+    const NodePointer getRoot() const;
 };
 
 #endif //STL_SET_IMPLEMENT_AVLTREE_H
