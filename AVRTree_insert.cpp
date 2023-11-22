@@ -29,18 +29,18 @@ Created by 박준영 on 11/18/23.
 
 using namespace std;
 
-int height(Node *N) {
-    if (N == NULL) {
+int height(Node *node) {
+    if (node == NULL) {
         return 0;
     }
-    return N->height;
+    return node->height;
 }
 
-int getBalanceFactor(Node *N) {
-    if (N == NULL) {
+int getBalanceFactor(Node *node) {
+    if (node == NULL) {
         return 0;
     }
-    return height(N->left) - height(N->right);
+    return height(node->left) - height(node->right);
 }
 
 Node *newNode(int key) {
@@ -52,24 +52,24 @@ Node *newNode(int key) {
     return node;
 }
 
-Node *rightRotate(Node *y) {
-    Node *x = y->left;
-    Node *T2 = x->right;
-    x->right = y;
-    y->left = T2;
-    y->height = max(height(y->left), height(y->right)) + 1;
-    x->height = max(height(x->left), height(x->right)) + 1;
-    return x;
+Node *rightRotate(Node *currentRoot) {
+    Node *newRoot = currentRoot->left;
+    Node *subtree = newRoot->right;
+    newRoot->right = currentRoot;
+    currentRoot->left = subtree;
+    currentRoot->height = max(height(currentRoot->left), height(currentRoot->right)) + 1;
+    newRoot->height = max(height(newRoot->left), height(newRoot->right)) + 1;
+    return newRoot;
 }
 
-Node *leftRotate(Node *x) {
-    Node *y = x->right;
-    Node *T2 = y->left;
-    y->left = x;
-    x->right = T2;
-    x->height = max(height(x->left), height(x->right)) + 1;
-    y->height = max(height(y->left), height(y->right)) + 1;
-    return y;
+Node *leftRotate(Node *currentRoot) {
+    Node *newRoot = currentRoot->right;
+    Node *subtree = newRoot->left;
+    newRoot->left = currentRoot;
+    currentRoot->right = subtree;
+    currentRoot->height = max(height(currentRoot->left), height(currentRoot->right)) + 1;
+    newRoot->height = max(height(newRoot->left), height(newRoot->right)) + 1;
+    return newRoot;
 }
 
 int getDepth(Node *node, int key, int depth) {
@@ -94,6 +94,7 @@ Node *insertNode(Node *node, int key) {
     if (node == NULL) {
         return (newNode(key));
     }
+
     if (key < node->key) {
         node->left = insertNode(node->left, key);
     } else if (key > node->key) {
