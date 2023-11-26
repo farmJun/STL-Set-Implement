@@ -26,10 +26,11 @@ Created by 손예원, 박준영, 장태양, 주시현 on 11/16/23.
 
 #ifndef STL_SET_IMPLEMENT_AVLTREE_H
 #define STL_SET_IMPLEMENT_AVLTREE_H
-
+#include <iostream>
+using namespace std;
 struct Node {
     int key, height, subtreeSize;
-    node *left, right;
+    Node *left, *right;
 };
 
 typedef Node *NodePointer;
@@ -63,7 +64,9 @@ public:
 
     pair<int, int> rankAndDepth(Node* root, int key, int currentDepth, int currentRank);
 
-    int erase()
+    int erase();
+
+    const NodePointer getRoot() const;
 };
 
 #endif //STL_SET_IMPLEMENT_AVLTREE_H
