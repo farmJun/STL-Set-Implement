@@ -51,3 +51,24 @@ NOdePointer AVLTree::find(int key) {
 	cout << "0\n";
 	return nullptr; //current_node == nullptr;
 }
+
+NOdePointer AVLTree::findWithoutPrint(int key) {
+	int depth = 0;
+	NodePointer current_node = root;
+
+	while (current_node != nullptr) {
+		if (current_node->key == key) {
+			return current_node;
+		}
+		else if (current_node->key > key) {
+			depth += 1;
+			current_node = current_node->left;
+		}
+		else { //current_node.key < key
+			depth += 1;
+			current_node = current_node->right;
+		}
+	}
+
+	return nullptr; //current_node == nullptr;
+}
