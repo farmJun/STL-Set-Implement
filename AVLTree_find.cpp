@@ -21,52 +21,54 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-Created by 손예원, 박준영, 장태양, 주시현 on 11/16/23.
+Created by 장태양on 11/19/23.
  */
 
-#ifndef STL_SET_IMPLEMENT_AVLTREE_H
-#define STL_SET_IMPLEMENT_AVLTREE_H
+#include "AVLTree.h"
 #include <iostream>
+
 using namespace std;
-struct Node {
-    int key, height, subtreeSize;
-    Node *left, *right;
-};
 
-typedef Node *NodePointer;
+NOdePointer AVLTree::find(int key) {
+	int depth = 0;
+	NodePointer current_node = root;
 
-class AVLTree {
-private:
-    NodePointer root;
-    int sizeOfTree;
+	while (current_node != nullptr) {
+		if (current_node->key == key) {
+			cout << depth << "\n";
+			return current_node;
+		}
+		else if (current_node->key > key) {
+			depth += 1;
+			current_node = current_node->left;
+		}
+		else { //current_node.key < key
+			depth += 1;
+			current_node = current_node->right;
+		}
+	}
+  
+	cout << "0\n";
+	return nullptr; //current_node == nullptr;
+}
 
-public:
-    AVLTree() {
-        root = nullptr;
-        sizeOfTree = 0;
-    };
+NOdePointer AVLTree::findWithoutPrint(int key) {
+	int depth = 0;
+	NodePointer current_node = root;
 
-    int minimum();
+	while (current_node != nullptr) {
+		if (current_node->key == key) {
+			return current_node;
+		}
+		else if (current_node->key > key) {
+			depth += 1;
+			current_node = current_node->left;
+		}
+		else { //current_node.key < key
+			depth += 1;
+			current_node = current_node->right;
+		}
+	}
 
-    int maximum();
-
-    void empty();
-
-    void size();
-
-    NodePointer find(int key);
-
-    NodePointer findWithoutPrint(int key);
-
-    int insert();
-
-    void rank(int key);
-
-    pair<int, int> rankAndDepth(Node* root, int key, int currentDepth, int currentRank);
-
-    int erase();
-
-    const NodePointer getRoot() const;
-};
-
-#endif //STL_SET_IMPLEMENT_AVLTREE_H
+	return nullptr; //current_node == nullptr;
+}

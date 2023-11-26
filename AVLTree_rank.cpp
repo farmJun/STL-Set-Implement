@@ -21,52 +21,37 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-Created by 손예원, 박준영, 장태양, 주시현 on 11/16/23.
+Created by 장태양 on 11/23/23.
  */
 
-#ifndef STL_SET_IMPLEMENT_AVLTREE_H
-#define STL_SET_IMPLEMENT_AVLTREE_H
+#include "AVLTree.h"
 #include <iostream>
+
 using namespace std;
-struct Node {
-    int key, height, subtreeSize;
-    Node *left, *right;
-};
 
-typedef Node *NodePointer;
+void AVLTree::rank(int key) {
+    if (findWithoutPrint(key) == nullptr) {
+        cout << 0 << '\n';
+        return;
+    }
 
-class AVLTree {
-private:
-    NodePointer root;
-    int sizeOfTree;
+    pair<int, int> result = rank(root, key, 0, 0);
+    cout << result.second << " " << result.first << '\n';
+}
 
-public:
-    AVLTree() {
-        root = nullptr;
-        sizeOfTree = 0;
-    };
+pair<int, int> rankAndDepth(NodePointer currentNode, int key, int currentDepth, int currentRank) {
+    if (currentNode == nullptr) {
+        return { 0, 0 };
+    }
 
-    int minimum();
-
-    int maximum();
-
-    void empty();
-
-    void size();
-
-    NodePointer find(int key);
-
-    NodePointer findWithoutPrint(int key);
-
-    int insert();
-
-    void rank(int key);
-
-    pair<int, int> rankAndDepth(Node* root, int key, int currentDepth, int currentRank);
-
-    int erase();
-
-    const NodePointer getRoot() const;
-};
-
-#endif //STL_SET_IMPLEMENT_AVLTREE_H
+    int leftSubtreeSize = currentNode->left->subtreeSize;
+    if (key == currentNode->key) {
+        return { currentRank + leftSubtreeSize + 1, currentDepth };
+    }
+    else if (key < currentNode->key) {
+        return rankAndDepth(currentNode->left, key, currentDepth + 1, currentRank);
+    }
+    else {//key > currentNode->key
+        return rankAndDepth(currentNode->right, key, currentDepth + 1, currentRank + leftSubtreeSize + 1);
+    }
+}

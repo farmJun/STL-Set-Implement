@@ -1,4 +1,4 @@
-/*
+﻿/*
 MIT License
 
 Copyright (c) 2023 Inha-Open-Source-Team-BBBig
@@ -21,52 +21,11 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-Created by 손예원, 박준영, 장태양, 주시현 on 11/16/23.
+Created by 손예원 on 11/20/23.
  */
-
-#ifndef STL_SET_IMPLEMENT_AVLTREE_H
-#define STL_SET_IMPLEMENT_AVLTREE_H
 #include <iostream>
-using namespace std;
-struct Node {
-    int key, height, subtreeSize;
-    Node *left, *right;
-};
+#include "AVLTree.h"
 
-typedef Node *NodePointer;
-
-class AVLTree {
-private:
-    NodePointer root;
-    int sizeOfTree;
-
-public:
-    AVLTree() {
-        root = nullptr;
-        sizeOfTree = 0;
-    };
-
-    int minimum();
-
-    int maximum();
-
-    void empty();
-
-    void size();
-
-    NodePointer find(int key);
-
-    NodePointer findWithoutPrint(int key);
-
-    int insert();
-
-    void rank(int key);
-
-    pair<int, int> rankAndDepth(Node* root, int key, int currentDepth, int currentRank);
-
-    int erase();
-
-    const NodePointer getRoot() const;
-};
-
-#endif //STL_SET_IMPLEMENT_AVLTREE_H
+void AVLTree::size() {
+    cout << sizeOfTree << '\n';
+}

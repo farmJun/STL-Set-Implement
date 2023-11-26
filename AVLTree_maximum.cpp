@@ -21,52 +21,27 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-Created by 손예원, 박준영, 장태양, 주시현 on 11/16/23.
+Created by 주시현 on 11/20/21.
  */
 
-#ifndef STL_SET_IMPLEMENT_AVLTREE_H
-#define STL_SET_IMPLEMENT_AVLTREE_H
+
+
+#include "AVLTree.h"
 #include <iostream>
-using namespace std;
-struct Node {
-    int key, height, subtreeSize;
-    Node *left, *right;
-};
 
-typedef Node *NodePointer;
+int AVLTree::maximum() {
+    int depth;
+    return maximum(root, depth);
+}
 
-class AVLTree {
-private:
-    NodePointer root;
-    int sizeOfTree;
+// AVLTree에서 특정 키를 기준으로 하여 최댓값을 출력하는 함수
+void AVLTree::maximum(int key) {
+    NodePointer currentNode = findWithoutPrint(key);
 
-public:
-    AVLTree() {
-        root = nullptr;
-        sizeOfTree = 0;
-    };
+    while (currentNode->right != nullptr) {
+        currentNode = currentNode->right;
+    }
 
-    int minimum();
-
-    int maximum();
-
-    void empty();
-
-    void size();
-
-    NodePointer find(int key);
-
-    NodePointer findWithoutPrint(int key);
-
-    int insert();
-
-    void rank(int key);
-
-    pair<int, int> rankAndDepth(Node* root, int key, int currentDepth, int currentRank);
-
-    int erase();
-
-    const NodePointer getRoot() const;
-};
-
-#endif //STL_SET_IMPLEMENT_AVLTREE_H
+    std::cout << currentNode->key << " ";
+    find(currentNode->key);
+}
