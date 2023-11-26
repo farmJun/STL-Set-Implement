@@ -43,51 +43,50 @@ int getBalanceFactor(Node *node) {
     return height(node->left) - height(node->right);
 }
 
+int getSubtreeSize(Node *node) {
+    return node != nullptr ? node->subtreeSize : 0;
+}
+
 Node *newNode(int key) {
     Node *node = new Node();
     node->key = key;
     node->left = NULL;
     node->right = NULL;
     node->height = 1;
+    node->subtreeSize = 1;
     return node;
 }
 
 Node *rightRotate(Node *currentRoot) {
     Node *newRoot = currentRoot->left;
     Node *subtree = newRoot->right;
+
     newRoot->right = currentRoot;
     currentRoot->left = subtree;
+
     currentRoot->height = max(height(currentRoot->left), height(currentRoot->right)) + 1;
+    currentRoot->subtreeSize = 1 + getSubtreeSize(currentRoot->left) + getSubtreeSize(currentRoot->right);
+
     newRoot->height = max(height(newRoot->left), height(newRoot->right)) + 1;
+    newRoot->subtreeSize = 1 + getSubtreeSize(newRoot->left) + getSubtreeSize(newRoot->right);
+
     return newRoot;
 }
 
 Node *leftRotate(Node *currentRoot) {
     Node *newRoot = currentRoot->right;
     Node *subtree = newRoot->left;
+
     newRoot->left = currentRoot;
     currentRoot->right = subtree;
+
     currentRoot->height = max(height(currentRoot->left), height(currentRoot->right)) + 1;
+    currentRoot->subtreeSize = 1 + getSubtreeSize(currentRoot->left) + getSubtreeSize(currentRoot->right);
+
     newRoot->height = max(height(newRoot->left), height(newRoot->right)) + 1;
+    newRoot->subtreeSize = 1 + getSubtreeSize(newRoot->left) + getSubtreeSize(newRoot->right);
+
     return newRoot;
-}
-
-int getDepth(Node *node, int key, int depth) {
-    if (node == NULL) {
-        return -1;
-    }
-
-    if (node->key == key) {
-        return depth;
-    }
-
-    int downlevel = getDepth(node->left, key, depth + 1);
-    if (downlevel != -1) {
-        return downlevel;
-    }
-
-    downlevel = getDepth(node->right, key, depth + 1);
-    return downlevel;
 }
 
 Node *insertNode(Node *node, int key) {
@@ -104,6 +103,7 @@ Node *insertNode(Node *node, int key) {
     }
 
     node->height = 1 + max(height(node->left), height(node->right));
+    node->subtreeSize = 1 + getSubtreeSize(node->left) + getSubtreeSize(node->right);
 
     int balanceFactor = getBalanceFactor(node);
 
@@ -128,49 +128,12 @@ Node *insertNode(Node *node, int key) {
     return node;
 }
 
-Node *AVLTree::insert(int key) {
+void *AVLTree::insert(int key) {
     root = insertNode(root, key);
-    int depth = getDepth(root, key, 1);
-    cout << depth << '\n';
-    return root;
+    find(key);
+    sizeOfTree++;
 }
 
 const NodePointer AVLTree::getRoot() const {
     return root;
-}
-
-void printTree(Node *root, string indent, bool last) {
-    if (root != nullptr) {
-        cout << indent;
-        if (last) {
-            cout << "R----";
-            indent += "   ";
-        } else {
-            cout << "L----";
-            indent += "|  ";
-        }
-        cout << root->key << endl;
-        printTree(root->left, indent, false);
-        printTree(root->right, indent, true);
-    }
-}
-
-int main() {
-    AVLTree avlTree;
-    avlTree.insert(50);
-    printTree(avlTree.getRoot(), "", true);
-    avlTree.insert(30);
-    printTree(avlTree.getRoot(), "", true);
-    avlTree.insert(20);
-    printTree(avlTree.getRoot(), "", true);
-    avlTree.insert(40);
-    printTree(avlTree.getRoot(), "", true);
-    avlTree.insert(70);
-    printTree(avlTree.getRoot(), "", true);
-    avlTree.insert(60);
-    printTree(avlTree.getRoot(), "", true);
-    avlTree.insert(80);
-    printTree(avlTree.getRoot(), "", true);
-
-    return 0;
 }
