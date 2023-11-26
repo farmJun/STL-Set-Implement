@@ -28,7 +28,7 @@ Created by 손예원, 박준영, 장태양, 주시현 on 11/16/23.
 #define STL_SET_IMPLEMENT_AVLTREE_H
 
 struct Node {
-    int key, height;
+    int key, height, subtreeSize;
     node *left, right;
 };
 
@@ -55,9 +55,13 @@ public:
 
     NodePointer find(int key);
 
+    NodePointer findWithoutPrint(int key);
+
     int insert();
 
-    int rank();
+    void rank(int key);
+
+    pair<int, int> rankAndDepth(Node* root, int key, int currentDepth, int currentRank);
 
     int erase()
 };
