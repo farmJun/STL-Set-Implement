@@ -21,45 +21,34 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-Created by 손예원, 박준영, 장태양, 주시현 on 11/16/23.
+Created by 장태양on 11/19/23.
  */
 
-#ifndef STL_SET_IMPLEMENT_AVLTREE_H
-#define STL_SET_IMPLEMENT_AVLTREE_H
+#include "AVLTree.h"
+#include <iostream>
 
-struct Node {
-    int key, height;
-    node *left, right;
-};
+using namespace std;
 
-typedef Node *NodePointer;
+NOdePointer AVLTree::find(int key) {
+	int depth = 0;
+	NodePointer current_node = root;
 
-class AVLTree {
-private:
-    NodePointer root;
-    int sizeOfTree;
+	while (current_node != nullptr) {
+		if (current_node->key == key) {
+			cout << depth << "\n";
+			return current_node;
+		}
+		else if (current_node->key > key) {
+			depth += 1;
+			current_node = current_node->left;
+		}
+		else { //current_node.key < key
+			depth += 1;
+			current_node = current_node->right;
+		}
+	}
 
-public:
-    AVLTree() {
-        root = nullptr;
-        sizeOfTree = 0;
-    };
-
-    int minimum();
-
-    int maximum();
-
-    void empty();
-
-    void size();
-
-    NodePointer find(int key);
-
-    int insert();
-
-    int rank();
-
-    int erase()
-};
-
-#endif //STL_SET_IMPLEMENT_AVLTREE_H
+	cout << "0\n";
+	return nullptr; //current_node == nullptr;
+}
+	
