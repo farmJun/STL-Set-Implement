@@ -58,13 +58,13 @@ public:
 
     NodePointer findWithoutPrint(int key);
 
-    int insert();
+    void insert(int key);
 
     void rank(int key);
 
     pair<int, int> rankAndDepth(Node* root, int key, int currentDepth, int currentRank);
 
-    int erase();
+    void erase(int key);
 
     const NodePointer getRoot() const;
 };

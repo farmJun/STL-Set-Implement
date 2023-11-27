@@ -128,7 +128,7 @@ Node *insertNode(Node *node, int key) {
     return node;
 }
 
-void *AVLTree::insert(int key) {
+void AVLTree::insert(int key) {
     root = insertNode(root, key);
     find(key);
     sizeOfTree++;
